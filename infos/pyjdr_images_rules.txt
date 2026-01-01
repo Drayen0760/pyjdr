@@ -1,0 +1,14 @@
+extension : webp
+taille : 720 x 720
+resolution : /
+couleurs : /
+nom : - monstre : 'race du monstre' (son 'nom') normalisée (fct pyjdr.str_op.normalize("your string"))
+      - joueur : 'nom du joueur' normalisé (fct pyjdr.str_op.normalize())
+emplacement : dans le module pyjdr (accés par fonction pyjdr.sauvegarde_et_chargement.getpath()) dans monstres/monstres_images/
+fond par défaud pour les parties transparentes des images : blanc
+
+source : www.co-drs.org/fr/bestiaire/creatures.html
+
+
+légende :
+/ -> peu importe
