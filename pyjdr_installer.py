@@ -74,7 +74,7 @@ def githubinstall(url : str ,
         out_git_clone = subprocess.run( f"cd {temp_path} && git clone {url}" ,
                              shell=True , text=True ,
                              stdout=subprocess.PIPE , stderr=subprocess.PIPE )
-        if out_git_clone.stderr and out_git_clone.stderr != "Clonage dans 'rich'...\n" :
+        if out_git_clone.stderr and out_git_clone.stderr != f"Clonage dans '{module_name}'...\n" :
             raise GitInstallationError(f"an error occured when downloading the module references from {url}, \ndetails : \n{out_git_clone.stderr}")
 
         elif out_git_clone.stderr != "Clonage dans 'rich'...\n" :
