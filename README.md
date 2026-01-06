@@ -46,7 +46,7 @@ pour gérer les parties (suppression, renommage, visualisation)
 
 ```python
 import pyjdr
-pyjdr.gamemaneger() # pour démarer
+pyjdr.gamemaneger() # pour gérer les parties
 ```
 ![demogamemanager](https://github.com/Drayen0760/pyjdr/blob/main/image/pyjdr_demo_gamemanager.png)
 </details>
