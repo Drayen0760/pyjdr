@@ -1,5 +1,5 @@
 """
-Ce module fournit une aid à la gestion de vos parties et combats de jeu de role
+Ce module fournit une aide à la gestion de vos parties et combats de jeu de role
 en permettant de stocker des informations sur des joueurs et des monstres
 
 -------------------------------------------------------------------------------
@@ -40,23 +40,23 @@ def start() :
     """
 
     global  nom_partie , etat_de_jeu , to_save
-    nom_partie , etat_de_jeu = __init_JDR()
-    print(etat_de_jeu)
-    __jouer()
+    nom_partie , etat_de_jeu = _init_JDR()
+    # print(etat_de_jeu)
+    _jouer()
     if to_save :
         save_game(nom_partie, etat_de_jeu)
         PrintMsg(("Votre partie a été [green]enregistrée[/green] avec succès ",1) , f"dans le dossier : '{nom_partie}'")
 
 
-def __jouer() :
+def _jouer() :
     global  nom_partie , etat_de_jeu , is_night , to_save
-    print("/!\\ Ce programme est seulement une aide pour le Jeu De Rôle qui vous permet d'enregistrer et de gérer vos persos. Ce n'est en aucun cas une simulation du jeu de rôle,peu de protections sont mises en places et vous pouvez très bien vous améliorer sans raison, je fais donc appel à votre sérieux et à votre bon sens pour ne pas détruire votre expérience de jeu !")
+    print("Bienvenu dans pyjdr !!\n")
     consignes = """
 [underline bold green]consigne de jeu : [/underline bold green]
 - vous pouvez y avoir accès à tout moment en entrant "help" dans les inputs généraux
-- un dé se représente sous la forme (a,b) où a est lmaine nb de dé lancé et b et le type de dé (d6 ou d20 par ex)
-- les rgles du jeux de rôle utilisées sont celles de Chroniques Oubliées
-- à chaque tour, vous devrez faire différent choix :
+- un dé se représente sous la forme (a,b) où a est le nb de dé lancé et b et le type de dé (d6 ou d20 par ex)
+- les regles du jeux de rôle utilisées sont celles de Chroniques Oubliées
+- à chaque tour, differentes possibilites s'offrent à vous :
     1 - lancer un combat (c)
     2 - interagir avec les PNJ (i)
     3 - franchir un obstacle (o)
@@ -98,7 +98,7 @@ def __jouer() :
             mod = eval(input("éventuel modificateur (une liste ou non de dé ou d'entier) : "))
             seuil = int(input("minimum pour la victoire : "))
             perso = input("nom du perso faisant le test : ")
-            perso = __vrai_perso(perso)
+            perso = _vrai_perso(perso)
 
             if perso == None :
                 Error("NameError","unknown character")
@@ -111,7 +111,7 @@ def __jouer() :
 
         elif inp == "s" or inp == "4" :
             perso = input("nom du perso subissant le soin (sort ou potion) : ")
-            perso = __vrai_perso(perso)
+            perso = _vrai_perso(perso)
             choix = input("potion ? (o/n)").lower() == "o"
 
             if choix :
@@ -197,8 +197,8 @@ def __jouer() :
             perso = ""
             while perso != "q" :
                 perso = input("nom du personnage : ")
-                if not __vrai_perso(perso) is None :
-                    afficher_creature(__vrai_perso(perso))
+                if not _vrai_perso(perso) is None :
+                    afficher_creature(_vrai_perso(perso))
                 else :
                     Error("NameError",f"unknown character {perso}")
 
@@ -211,8 +211,20 @@ def __jouer() :
             Error("CommandError" , f"invalid command '{inp}', type 'h' to get help")
 
 
-def __init_JDR() :
-    # chargement / création de la partie
+def _init_JDR() :
+    """
+    hargement / création de la partie
+
+    Returns
+    -------
+    nom_partie : str
+        nom de la partie.
+    etat_de_jeu : dict
+        etat_de_jeu{
+
+            }.
+
+    """
     old = False
     nom_partie = input("nom de votre partie : ")
     partie = path+"/"+"parties/"+nom_partie
@@ -242,7 +254,7 @@ def __init_JDR() :
     return nom_partie , etat_de_jeu
 
 
-def __vrai_perso(perso_nom) :
+def _vrai_perso(perso_nom) :
     for i in range(len(etat_de_jeu["noms"])) :
         if etat_de_jeu["noms"][i] == perso_nom :
             return etat_de_jeu["personnages"].Get(i)
@@ -279,16 +291,16 @@ def gamemanager() :
     while not inp in ("3","q") :
 
         if inp in ("0","s") :
-            __deletegame(parties)
+            _deletegame(parties)
             parties = os.listdir(path+"/parties")
             printgamesandactions(parties,actions)
 
         elif inp in ("1","v") :
-            __seegame(parties)
+            _seegame(parties)
             printgamesandactions(parties,actions)
 
         elif inp in ("2","r") :
-            __rename(parties)
+            _rename(parties)
 
         else :
             Error("ValueError",f"invalid value '{inp}'")
@@ -297,7 +309,7 @@ def gamemanager() :
     print("\n\n----------------\n\nexit")
 
 
-def __deletegame(parties) :
+def _deletegame(parties) :
     print("liste des parties : ")
     for i,p in enumerate(parties) :
         print(f"\t{i}) {p}")
@@ -313,7 +325,7 @@ def __deletegame(parties) :
         print("partie SUPPRIMEE")
 
 
-def __seegame(parties) :
+def _seegame(parties) :
     global etat_de_jeu
     print("liste des parties : ")
     for i,p in enumerate(parties) :
@@ -337,13 +349,13 @@ def __seegame(parties) :
     perso = ""
     while perso != "q" :
         perso = input("nom du personnage : ")
-        if not __vrai_perso(perso) is None :
-            afficher_creature(__vrai_perso(perso))
+        if not _vrai_perso(perso) is None :
+            afficher_creature(_vrai_perso(perso))
         else :
             Error("NameError",f"unknown character {perso}")
 
 
-def __rename(parties) :
+def _rename(parties) :
     inp = input("GameManager - DeleteGame - numéro de la partie à renommer : ")
     while not isvalidgame(parties,inp) :
        inp = input("GameManager - DeleteGame - numéro de la partie à renommer : ")
