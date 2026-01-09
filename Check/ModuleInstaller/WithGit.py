@@ -40,7 +40,7 @@ def githubinstall(url : str ,
         operatingsystem = get_os()
 
     #%% linux
-    if operatingsystem == "linux" :
+    if operatingsystem in ("linux","macos "):
         if len(files_or_folders_to_load) == 1  or files_or_folders_to_load == [] :
             create_global_dir = False
         else :
@@ -57,12 +57,12 @@ def githubinstall(url : str ,
                 )
 
         #%%% git clone
-        print("chargement de github...")
+        print("chargement depuis github...")
 
         out_git_clone = subprocess.run( f"cd {temp_path} && git clone {url}" ,
                              shell=True , text=True ,
                              stdout=subprocess.PIPE , stderr=subprocess.PIPE )
-        if out_git_clone.stderr and out_git_clone.stderr != "Clonage dans 'rich'...\n" :
+        if out_git_clone.stderr and out_git_clone.stderr != f"Clonage dans '{module_name}'...\n" :
             raise GitInstallationError(f"an error occured when downloading the module references from {url}, \ndetails : \n{out_git_clone.stderr}")
 
         elif out_git_clone.stderr != "Clonage dans 'rich'...\n" :
@@ -104,7 +104,7 @@ def githubinstall(url : str ,
             print( "out_mkdir" , " : \n\t" , out_mkdir , "\n\n" )
             print( "out_move" , " : \n\t" , out_move , "\n\n" )
 
-    #%% TODO : macos and windows
+    #%% TODO : windows
     else :
         # TODO
         print(f"not implemented yet for {operatingsystem}")
