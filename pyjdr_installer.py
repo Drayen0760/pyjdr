@@ -144,8 +144,7 @@ def main() :
 """
 )
         return error
-    finally :
-        pyjdr.Check.check_deps.check_PyJDR_deps()
+    pyjdr.Check.check_deps.check_PyJDR_deps()
 
 if __name__ == "__main__" :
     main()
